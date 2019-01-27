@@ -1,17 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Input from '@material-ui/core/Input';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
 
 class CaseConverter extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {};
   }
 
-  handleChange(e){
+  handleChange(e) {
     const snake = this.snakeize(e.target.value);
     const kabab = this.kebabize(e.target.value);
-    this.setState({ 
+    this.setState({
       pascal: this.pascalize(e.target.value),
       camel: this.camelize(e.target.value),
       snake: snake,
@@ -20,7 +24,7 @@ class CaseConverter extends React.Component {
       upperKabab: kabab.toUpperCase()
     });
   }
-  
+
   /**
    * Convert string to camel case
    * @param {string} str 
@@ -44,10 +48,10 @@ class CaseConverter extends React.Component {
    * Convert string to snake case
    * @param {string} str 
    */
-  snakeize(str){
+  snakeize(str) {
     str = str.toLowerCase();
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
-      return index === 0 ? letter : '_' + letter; 
+      return index === 0 ? letter : '_' + letter;
     }).replace(/\s+/g, '');
   }
 
@@ -55,24 +59,27 @@ class CaseConverter extends React.Component {
    * Convert string to kebab case
    * @param {string} str 
    */
-  kebabize(str){
+  kebabize(str) {
     str = str.toLowerCase();
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
-      return index === 0 ? letter : '-' + letter; 
+      return index === 0 ? letter : '-' + letter;
     }).replace(/\s+/g, '');
   }
 
-  render(){
-    return(
-      <form>
-        <input type="text" onChange={this.handleChange} />
-        <p>{this.state.pascal}</p>
-        <p>{this.state.camel}</p>
-        <p>{this.state.snake}</p>
-        <p>{this.state.upperSnake}</p>
-        <p>{this.state.kabab}</p>
-        <p>{this.state.upperKabab}</p>
-      </form>
+  render() {
+    return (
+      <Grid container spacing={24}>
+        <Grid item xs={12}>
+          <Typography variant="display1">Case Converter</Typography>
+          <Input type="text" onChange={this.handleChange} />
+          <Typography variant="body1" gutterBottom>{this.state.pascal}</Typography>
+          <Typography variant="body1" gutterBottom>{this.state.camel}</Typography>
+          <Typography variant="body1" gutterBottom>{this.state.snake}</Typography>
+          <Typography variant="body1" gutterBottom>{this.state.upperSnake}</Typography>
+          <Typography variant="body1" gutterBottom>{this.state.kabab}</Typography>
+          <Typography variant="body1" gutterBottom>{this.state.upperKabab}</Typography>
+        </Grid>
+      </Grid>
     )
   }
 }
